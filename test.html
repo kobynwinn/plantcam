@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+    
+    <h1 id="time">Testing Dynamic Updateing: 00:00</h1>
+    <h2 id="TextAdding"><strong></strong></h2>
+
+    <button type="button" onclick="T1()">Add Hello</button>
+    <button type="button" onclick="T2()">Add World</button>
+    <button type="button" onclick="T3()">Add Test</button>
+    <button type="button" onclick="T4()">Add Test 2</button>
+    <button type="button" onclick="T5()">Random Number</button>
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    
+    <script>
+        function T1() {$.getJSON("/T1");}
+        function T2() {$.getJSON("/T2");}
+        function T3() {$.getJSON("/T3");}
+        function T4() {$.getJSON("/T4");}
+        function T5() {$.getJSON("/T5");}
+    </script>
+
+    <!-- 
+        This is for Dynamically updaing HTML elements, 
+        It Calls the Sever for data to replace on any objects in the function
+        The Data returnred from the sever is in a dictionary table
+        Each item has to have a custom Class and id
+    -->
+    <script>
+        setInterval(function(){
+            $.getJSON("/Dy_update",function(data){
+                document.getElementById("time").innerHTML = "Testing Dynamic Updateing: "+data.time;
+                document.getElementById("TextAdding").innerHTML = data.TitleChange;
+            });
+        },.1)
+    </script>
+
+</body>
+
+</html>
