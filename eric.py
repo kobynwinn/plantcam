@@ -31,9 +31,5 @@ def temps():
 #GPIO SETUP
 
 GPIO.setup(5, GPIO.IN)
-def callback(channel):
-    print(GPIO.input(5))
+def callback():
     return GPIO.input(5)
-
-GPIO.add_event_detect(5, GPIO.BOTH, bouncetime=300)  # let us know when the pin goes HIGH or LOW
-GPIO.add_event_callback(5, callback)  # assign function to GPIO PIN, Run function on change

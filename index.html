@@ -109,7 +109,7 @@ button {
 
 .WaterText {
   position: absolute;
-  top: 2%;
+  top: 15%;
   left: 2%;
   font-size: 25px;
   color: white;
@@ -135,8 +135,13 @@ body {
 
 <body>
 
-  <h2 class="TempText" id="Temp">Room Tempature: </h2>
-  <h2 class="WaterText" id="Water">Water Level: </h2>
+  <div class="TempText">
+    <h2 class="TempText" style="width: 100%; height:100%; background-attachment: fixed;" id="Temp"></h2>
+  </div>
+  <div class="WaterText">
+    <h2 class="WaterText" style="width: 100%; height:100%; background-attachment: fixed;" id="Water"></h2>
+  </div>
+
 
 <div class="main" id="newpost">
   <img  class="camera-bg" style="width: 100%; height:100%; background-attachment: fixed;" id="bg" class="center" src="{{ url_for('video_feed') }}">
