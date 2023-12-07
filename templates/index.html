@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.Left {
+  position: fixed;
+  left: 15px;
+  bottom: 53px;
+  width: 50px;
+  height: 40px; 
+  background-color: Transparent;
+}
+
+.Down {
+  position: fixed;
+  left: 52.5px;
+  bottom: 15.5px;
+  width: 50px;
+  height: 40px; 
+  background-color: Transparent;
+}
+
+.Up {
+  position: fixed;
+  left: 52.5px;
+  bottom: 90.5px;
+  width: 50px;
+  height: 40px; 
+  background-color: Transparent;
+}
+
+.Right {
+  position: fixed;
+  left: 90px;
+  bottom: 53px;
+  width: 50px;
+  height: 40px; 
+  background-color: Transparent;
+}
+.camera-movement{
+  float: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.lights-button{
+	float: right;
+}
+
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height: 100%;
+}
+
+button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    width: 100%;
+    height: 100%;
+}
+
+.camera-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  min-height: 100%;
+
+    /* Full height */
+  height: 100%;
+
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+
+.TempText {
+  position: absolute;
+  top: 2%;
+  left: 2%;
+  font-size: 25px;
+  color: white;
+  opacity: 0.5;
+}
+
+.WaterText {
+  position: absolute;
+  top: 15%;
+  left: 2%;
+  font-size: 25px;
+  color: white;
+  opacity: 0.5;
+}
+
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: black;
+}
+
+
+</style>
+</head>
+
+<title>Pant-Cam</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<body>
+
+
+
+<div class="main" id="newpost">
+  <img  class="camera-bg" style="width: 100%; height:100%; background-attachment: fixed;" id="bg" class="center" src="{{ url_for('video_feed') }}">
+</div>
+
+<div class="TempText">
+  <a id="Temp"></a></a>
+</div>
+<div class="WaterText">
+  <a id="Water"></a></a>
+</div>
+
+
+
+  <div class="Left">
+        <button id="move-button" onclick="L(1)" >
+          <img src="https://drive.google.com/uc?id=1fgnmoAhRBwOK2V5RG5MnAoSaniwKFs9U">
+      </button>
+  </div>
+  <div class="Down">
+        <button id="move-button" onclick="D(1)" >
+          <img src="https://drive.google.com/uc?id=11wuafkh5yxm7yNQPY-yp0LzMy2YpG7mZ">
+      </button>
+  </div>
+  <div class="Up">
+        <button id="move-button" onclick="U(1)">
+          <img src="https://drive.google.com/uc?id=1L5MfLavzaOSbT7pct052JU2ItXMuYYEL">
+      </button>
+  </div>
+  <div class="Right">
+        <button id="move-button" onclick="R(1)" >
+          <img src="https://drive.google.com/uc?id=1sic3-WKPxFJ_8GCF_4f4LreGnZ9afAFy">
+      </button>
+  </div>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+  <script>
+    var LH,DH,UH,RH;
+    function L(Arg) {
+        $.getJSON("/L");
+    }
+    function R(Arg) {
+        $.getJSON("/R");
+    }
+    function D(Arg) {
+        $.getJSON("/D");
+    }
+    function U(Arg) {
+        $.getJSON("/U");
+    }
+    </script>
+
+  <script>
+    setInterval(function(){
+        $.getJSON("/Dy_update",function(data){
+            document.getElementById("Temp").innerHTML = "Room Tempature: "+data.temp;
+            document.getElementById("Water").innerHTML = "Water Level: "+data.water;
+        });
+    },.1)
+  </script>
+
+</body>
+</html>
