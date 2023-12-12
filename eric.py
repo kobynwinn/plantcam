@@ -16,15 +16,15 @@ vref = 3.3 #voltage used
 ktemp = 23 #adjusts the temperature
 tprev = 0
 tcurr = 0
-tstart = time.perf_counter()
+tstart = time.perf_counter() #starts a timer
 
 def temps():
     
     global tsample, tdisp, tstop, vref, ktemp, tprev, tcurr, tstart #This code operates the temperature sensor and outputs the temperature data
-    tcurr = time.perf_counter() - tstart
-    valuecurr = chtemp.value
+    tcurr = time.perf_counter() - tstart #the current time is set to the timer
+    valuecurr = chtemp.value #puts the temperature sensor value into a new variable
     tempcurr = vref*ktemp*valuecurr*(9/5)+32 #calculates the temperature
-    return int(np.round(tempcurr)) #rreturns the temperature vlaue
+    return int(np.round(tempcurr)) #returns the temperature vlaue
     tprev = tcurr #updates the current amount of time passed
        
 #GPIO SETUP
