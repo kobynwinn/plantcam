@@ -155,81 +155,70 @@ class VideoCamera(object): #this code starts the camera stream
 
 
 
+---------------------------------------------------
 
-now you will need to make a folder labeled "templates"
-and within it make an html file labeled "index"
-to code index,
+now all is left for you is to set up the Website, But you need a HTML file to show everything else.
 
+First you need to create a folder called **templates** and within that folder a file called **index.html**. Now all you need is the code to display all of the infomation. Lets start with all of the metadata which is stored in the <head> for every website
 
-
-
+You Copy and Past this to start
 
 <!DOCTYPE html>
 <html>
 <head>
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.Left {
+/* Left Button Placement */
+.Left { 
   position: fixed;
-  left: 15px;
-  bottom: 53px;
-  width: 50px;
-  height: 40px; 
+  right:50%;
+  bottom: 15px;
+  width: 80px;
+  height: 70px; 
   background-color: Transparent;
 }
 
-.Down {
-  position: fixed;
-  left: 52.5px;
-  bottom: 15.5px;
-  width: 50px;
-  height: 40px; 
-  background-color: Transparent;
-}
-
-.Up {
-  position: fixed;
-  left: 52.5px;
-  bottom: 90.5px;
-  width: 50px;
-  height: 40px; 
-  background-color: Transparent;
-}
-
+/* Right Button Placement */
 .Right {
   position: fixed;
-  left: 90px;
-  bottom: 53px;
-  width: 50px;
-  height: 40px; 
+  left: 50%;
+  bottom: 15px;
+  width: 80px;
+  height: 70px; 
   background-color: Transparent;
 }
-.camera-movement{
-  float: none;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+
+/* Tempature Text Placement */
+.TempText {
+  white-space: pre-line;
+  position: absolute;
+  bottom: 25px;
+  right: 52.25%;
+  font-size: 20px;
+  opacity: 1;
+  text-align: center;
+  transform: translate(-50%, 0);
 }
 
-.lights-button{
-	float: right;
+/* Is Soil Wet Text Placement */
+.WaterText {
+  white-space: pre-line;
+  position: absolute;
+  bottom: 25px;
+  left: 60%;
+  font-size: 20px;
+  opacity: 1;
+  text-align: center;
+  transform: translate(-50%, 0);
 }
 
-
-img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-    height: 100%;
-}
-
+/* How the Button Is going to show */
 button {
     background-color: Transparent;
     background-repeat:no-repeat;
@@ -241,43 +230,12 @@ button {
     height: 100%;
 }
 
+/* Camera Display */
 .camera-bg {
-  position: fixed;
   top: 0;
   left: 0;
-
-  /* Preserve aspet ratio */
-  min-width: 100%;
-  min-height: 100%;
-
-    /* Full height */
-  height: 100%;
-
-
-  /* Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
-
-}
-
-
-.TempText {
-  position: absolute;
-  top: 2%;
-  left: 2%;
-  font-size: 25px;
-  color: white;
-  opacity: 0.5;
-}
-
-.WaterText {
-  position: absolute;
-  top: 15%;
-  left: 2%;
-  font-size: 25px;
-  color: white;
-  opacity: 0.5;
 }
 
 
@@ -294,40 +252,34 @@ body {
 </style>
 </head>
 
-<title>Pant-Cam</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plant-Cam</title> 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+Now you have Added all the Metadata for the site if you set anything to one of the things in the meta data it will copy all of that Infomation or you can do it manually. 
+
+Now Lets move on to the Body of the site the Most inmport part of this to display all of the documents on the site. This Is Basiclly the Core of the site without it you site would just now show anything to the users connecting to it.
+
+You Copy and Past this
 
 <body>
 
+<!-- Adding The Camera As Images while the Main.py is Sending bits to http://losthost:5000/video_feed -->
+<img  class="camera-bg" style="width: 100%; height: 85%;" id="bg" class="center" src="{{ url_for('video_feed') }}">
 
 
-<div class="main" id="newpost">
-  <img  class="camera-bg" style="width: 100%; height:100%; background-attachment: fixed;" id="bg" class="center" src="{{ url_for('video_feed') }}">
-</div>
-
+<!-- Text Displaying -->
 <div class="TempText">
-  <a id="Temp"></a></a>
+  <a  id="Temp" style="color: hwb(234 0% 1%);">Tempature\n"+data.temp+"°F | "+parseFloat((data.temp - 32) * 5/9).toFixed(2)+ "°C</a>
 </div>
 <div class="WaterText">
-  <a id="Water"></a></a>
+  <a id="Water" style="color: green;">Is Soil Wet\n"+(data.water == 1)</a>
 </div>
 
 
-
+<!-- Button Crestion and one clicked to Call a function also crweates a image of a arrow -->
   <div class="Left">
         <button id="move-button" onclick="L(1)" >
           <img src="https://drive.google.com/uc?id=1fgnmoAhRBwOK2V5RG5MnAoSaniwKFs9U">
-      </button>
-  </div>
-  <div class="Down">
-        <button id="move-button" onclick="D(1)" >
-          <img src="https://drive.google.com/uc?id=11wuafkh5yxm7yNQPY-yp0LzMy2YpG7mZ">
-      </button>
-  </div>
-  <div class="Up">
-        <button id="move-button" onclick="U(1)">
-          <img src="https://drive.google.com/uc?id=1L5MfLavzaOSbT7pct052JU2ItXMuYYEL">
       </button>
   </div>
   <div class="Right">
@@ -336,40 +288,49 @@ body {
       </button>
   </div>
 
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  </body>
+  </html>
 
+  Now you Site will now have a functioning display but you site has zero code to it and will not have any functionallity> So now Lets add in the lines for the Scrips of the site.
+
+First lets start with like the core of the site. If this isn't apart of the Code the Whole site would look weird and procceed not to function as intended.
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> <!-- This is the True Core of the site or it will break -->
+
+Now Lets do The Button Functions. If Anything from anywere in the body calls for a L() or a R() Theses Functions will be called and send a Request to http://localhost:5000/(L or R) for Infomation the Main.py will send back "None" so it doesn't break.
+  <!-- The Left and Right function for the Servor that Main.py calls fom http://localhost:5000/(L/R) -->
   <script>
-    var LH,DH,UH,RH;
-    function L(Arg) {
+    function L() {
         $.getJSON("/L");
     }
-    function R(Arg) {
+    function R() {
         $.getJSON("/R");
-    }
-    function D(Arg) {
-        $.getJSON("/D");
-    }
-    function U(Arg) {
-        $.getJSON("/U");
     }
     </script>
 
+For the Most part your site fully works but there is one thing. The Tempature and Is Soil Wet Text Objects Won't Update ever that is a bad thing. So finally lets add a Dynapacally updateing part to this whole site. 
+<!-- Same as Above but at http://localhost:5000/Dy_update and gets data back to update Tempature and Is Soil Wet -->
   <script>
     setInterval(function(){
         $.getJSON("/Dy_update",function(data){
-            document.getElementById("Temp").innerHTML = "Room Tempature: "+data.temp;
-            document.getElementById("Water").innerHTML = "Water Level: "+data.water;
+
+          //Tempature Changing  propertys
+          var TempateureVal = document.getElementById("Temp")
+          TempateureVal.innerHTML = "Tempature\n"+data.temp+"°F | "+parseFloat((data.temp - 32) * 5/9).toFixed(2)+ "°C"; // Text Displaying
+          TempateureVal.style= "color: hwb("+(260-parseFloat((data.temp - 32) * 5/9).toFixed(2)*6.5)+" 0% 0%);"; // Color Changeing
+
+
+          // Is Soil Wet Changeing Propertys of Text and Color
+          document.getElementById("Water").innerHTML = "Is Soil Wet\n"+(data.water == 1);
+          if (data.water == 1)
+            document.getElementById("Water").style= "color: rgb(0,255,0);";
+          else
+            document.getElementById("Water").style= "color: rgb(255,0,0);";
         });
     },.1)
   </script>
 
-</body>
-</html>
+  This Whole Function will send a Request to http://localhost:5000/Dy_update for information And the Main.py Redirrects that do a function within that will send back a table of data that this will Receave. With this data the was Receaved this will update the Infomation on the Tempature Text and also the Is Soil Wet Text. 
 
-and your code is done. make sure to change code according to your used gpio pins.
-
-to run the code go to temrinal and type the following
-
-sudo python3 Main.py
+Now all is left is for you to run the code go to temrinal and type the following **sudo python3 Main.py**. And now you are finished with this whole Plant Camera, We Hope you Enjoy to pretend to care about your plants!
 
 Final Assembly Display![[image_50458881.jpg]]
