@@ -69,9 +69,9 @@ if __name__ == '__main__': #runs main
     app.run(host='0.0.0.0', debug=False)
 
 ````
+to code eric,
 
 ````python
-to code eric,
 from ast import Global
 import time
 import numpy as np
