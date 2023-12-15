@@ -10,12 +10,15 @@ Keyes Studio Soil Moisture Sensor
 assorted male to male wires
 assorted male to female wires
 
-to setup the ADC, connect it to the breadboard and wire it to the corresponding wires based off of this diagram![[wiring.png]]
+to setup the ADC, connect it to the breadboard and wire it to the corresponding wires based off of this diagram (labelled wiring.png)
+
+https://drive.google.com/drive/folders/1d5sZ45J1pqAGjh2wdIwn_g3h6gzKXOKV?usp=sharing
+
 next connect the sg90 to the respective 5.0v, GPIO pin, and Ground
 do the same to the soil moisture sensor,
 make sure to write down what input/output pins you used
 
-alter your code to work with the correct GPIO pins and your cuircuit is wired.
+alter your code to work with the correct GPIO pins and your circuit is wired.
 
 
 Code with Comments:
@@ -65,7 +68,9 @@ def Dy_update():#handles updating the data from the eric.py folder
 if __name__ == '__main__': #runs main
     app.run(host='0.0.0.0', debug=False)
 
+````
 
+````python
 to code eric,
 from ast import Global
 import time
@@ -292,13 +297,13 @@ You Copy and Past this
   </html>
 ````
 
-  Now you Site will now have a functioning display but you site has zero code to it and will not have any functionallity So now Lets add in the lines for the Scrips of the site.
+  Now you Site will now have a functioning display but you site has zero code to it and will not have any functionality So now Lets add in the lines for the Scrips of the site.
 
-First lets start with like the core of the site. If this isn't apart of the Code the Whole site would look weird and procceed not to function as intended.
+First lets start with like the core of the site. If this isn't apart of the Code the Whole site would look weird and proceed not to function as intended.
 ````html
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> <!-- This is the True Core of the site or it will break -->
 ````
-Now Lets do The Button Functions. If Anything from anywere in the body calls for a L() or a R() Theses Functions will be called and send a Request to http://localhost:5000/(L or R) for Infomation the Main.py will send back "None" so it doesn't break.
+Now Lets do The Button Functions. If Anything from anywhere in the body calls for a L() or a R() Theses Functions will be called and send a Request to http://localhost:5000/(L or R) for Information the Main.py will send back "None" so it doesn't break.
 ````html
 
   <!-- The Left and Right function for the Servor that Main.py calls fom http://localhost:5000/(L/R) -->
@@ -312,7 +317,7 @@ Now Lets do The Button Functions. If Anything from anywere in the body calls for
     </script>
 ````
 
-For the Most part your site fully works but there is one thing. The Tempature and Is Soil Wet Text Objects Won't Update ever that is a bad thing. So finally lets add a Dynapacally updateing part to this whole site. 
+For the Most part your site fully works but there is one thing. The Temperature and Is Soil Wet Text Objects Won't Update ever that is a bad thing. So finally lets add a Dynamically updating part to this whole site. 
 ````html
 <!-- Same as Above but at http://localhost:5000/Dy_update and gets data back to update Tempature and Is Soil Wet -->
   <script>
@@ -335,9 +340,9 @@ For the Most part your site fully works but there is one thing. The Tempature an
     },.1)
   </script>
 ````
-This Whole Function will send a Request to http://localhost:5000/Dy_update for information And the Main.py Redirrects that do a function within that will send back a table of data that this will Receave. With this data the was Receaved this will update the Infomation on the Tempature Text and also the Is Soil Wet Text. 
+This Whole Function will send a Request to http://localhost:5000/Dy_update for information And the Main.py Redirects that do a function within that will send back a table of data that this will Receive. With this data the was Received this will update the Information on the Temperature Text and also the Is Soil Wet Text. 
 
-Now all is left is for you to run the code go to temrinal and type the following **sudo python3 Main.py**. And now you are finished with this whole Plant Camera, We Hope you Enjoy to pretend to care about your plants!
+Now all is left is for you to run the code go to terminal and type the following **sudo python3 Main.py**. And now you are finished with this whole Plant Camera, We Hope you Enjoy to pretend to care about your plants!
 
-Final Assembly Display
-![[image_50458881.jpg]]
+Final Assembly Display (labeled final.jpg)
+https://drive.google.com/drive/folders/1d5sZ45J1pqAGjh2wdIwn_g3h6gzKXOKV?usp=sharing
