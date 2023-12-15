@@ -10,8 +10,7 @@ Keyes Studio Soil Moisture Sensor
 assorted male to male wires
 assorted male to female wires
 
-to setup the ADC, connect it to the breadboard and wire it to the corresponding wires based off of this diagram
-![[Pasted image 20231212133230.png]]
+to setup the ADC, connect it to the breadboard and wire it to the corresponding wires based off of this diagram![[wiring.png]]
 next connect the sg90 to the respective 5.0v, GPIO pin, and Ground
 do the same to the soil moisture sensor,
 make sure to write down what input/output pins you used
@@ -26,6 +25,7 @@ to code main:
 
 
 
+````python
 from flask import Flask, render_template, Response, request, send_from_directory
 import eric
 from camera import VideoCamera
@@ -106,12 +106,11 @@ def callback():
 
 
 
+````
 
 to code camera,
-
-
-
-
+``
+````python
 #Modified by smartbuilds.io
 #Date: 27.09.20
 #Desc: This scrtipt script..
@@ -122,7 +121,7 @@ import imutils
 import time
 from datetime import datetime
 import numpy as np
-#
+#importing libraries
 class VideoCamera(object): #this code starts the camera stream
     def __init__(self, flip = False, file_type  = ".jpg", photo_string= "stream_photo"):
         # self.vs = PiVideoStream(resolution=(1920, 1080), framerate=30).start() (removed code)
@@ -153,16 +152,17 @@ class VideoCamera(object): #this code starts the camera stream
         today_date = datetime.now().strftime("%m%d%Y-%H%M%S") # get current time
         cv.imwrite(str(self.photo_string + "_" + today_date + self.file_type), frame)
 
-
+````
 
 ---------------------------------------------------
 
 now all is left for you is to set up the Website, But you need a HTML file to show everything else.
 
-First you need to create a folder called **templates** and within that folder a file called **index.html**. Now all you need is the code to display all of the infomation. Lets start with all of the metadata which is stored in the <head> for every website
+First you need to create a folder called **templates** and within that folder a file called **index.html**. Now all you need is the code to display all of the information. Lets start with all of the metadata which is stored in the head for every website
 
 You Copy and Past this to start
-
+````html
+<head>
 <!DOCTYPE html>
 <html>
 <head>
@@ -254,13 +254,13 @@ body {
 
 <title>Plant-Cam</title> 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+````
 Now you have Added all the Metadata for the site if you set anything to one of the things in the meta data it will copy all of that Infomation or you can do it manually. 
 
 Now Lets move on to the Body of the site the Most inmport part of this to display all of the documents on the site. This Is Basiclly the Core of the site without it you site would just now show anything to the users connecting to it.
 
 You Copy and Past this
-
+````html
 <body>
 
 <!-- Adding The Camera As Images while the Main.py is Sending bits to http://losthost:5000/video_feed -->
@@ -290,13 +290,17 @@ You Copy and Past this
 
   </body>
   </html>
+````
 
-  Now you Site will now have a functioning display but you site has zero code to it and will not have any functionallity> So now Lets add in the lines for the Scrips of the site.
+  Now you Site will now have a functioning display but you site has zero code to it and will not have any functionallity So now Lets add in the lines for the Scrips of the site.
 
 First lets start with like the core of the site. If this isn't apart of the Code the Whole site would look weird and procceed not to function as intended.
+````html
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> <!-- This is the True Core of the site or it will break -->
-
+````
 Now Lets do The Button Functions. If Anything from anywere in the body calls for a L() or a R() Theses Functions will be called and send a Request to http://localhost:5000/(L or R) for Infomation the Main.py will send back "None" so it doesn't break.
+````html
+
   <!-- The Left and Right function for the Servor that Main.py calls fom http://localhost:5000/(L/R) -->
   <script>
     function L() {
@@ -306,8 +310,10 @@ Now Lets do The Button Functions. If Anything from anywere in the body calls for
         $.getJSON("/R");
     }
     </script>
+````
 
 For the Most part your site fully works but there is one thing. The Tempature and Is Soil Wet Text Objects Won't Update ever that is a bad thing. So finally lets add a Dynapacally updateing part to this whole site. 
+````html
 <!-- Same as Above but at http://localhost:5000/Dy_update and gets data back to update Tempature and Is Soil Wet -->
   <script>
     setInterval(function(){
@@ -328,9 +334,10 @@ For the Most part your site fully works but there is one thing. The Tempature an
         });
     },.1)
   </script>
-
-  This Whole Function will send a Request to http://localhost:5000/Dy_update for information And the Main.py Redirrects that do a function within that will send back a table of data that this will Receave. With this data the was Receaved this will update the Infomation on the Tempature Text and also the Is Soil Wet Text. 
+````
+This Whole Function will send a Request to http://localhost:5000/Dy_update for information And the Main.py Redirrects that do a function within that will send back a table of data that this will Receave. With this data the was Receaved this will update the Infomation on the Tempature Text and also the Is Soil Wet Text. 
 
 Now all is left is for you to run the code go to temrinal and type the following **sudo python3 Main.py**. And now you are finished with this whole Plant Camera, We Hope you Enjoy to pretend to care about your plants!
 
-Final Assembly Display![[image_50458881.jpg]]
+Final Assembly Display
+![[image_50458881.jpg]]
